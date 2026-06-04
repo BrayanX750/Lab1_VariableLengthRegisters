@@ -14,9 +14,9 @@ void Index::load(std::string filename) {
     while (file >> cuenta >> offset >> size >> activo) {
         IndexEntry e;
         e.noCuenta = cuenta;
-        e.offset = offset;
-        e.size = size;
-        e.activo = activo;
+        e.offset   = offset;
+        e.size     = size;
+        e.activo   = activo;
         entries.push_back(e);
     }
 
@@ -28,9 +28,9 @@ void Index::save(std::string filename) {
 
     for (int i = 0; i < entries.size(); i++) {
         file << entries[i].noCuenta << " "
-             << entries[i].offset << " "
-             << entries[i].size << " "
-             << entries[i].activo << "\n";
+             << entries[i].offset   << " "
+             << entries[i].size     << " "
+             << entries[i].activo   << "\n";
     }
 
     file.close();
@@ -38,68 +38,78 @@ void Index::save(std::string filename) {
 
 bool Index::insert(IndexEntry entry) {
     if (find(entry.noCuenta) != nullptr) {
-        std::cout << "Error: ya existe un registro con ese numero de cuenta." << std::endl;
+        std::cout << "Ya existe un alumno con ese numero de cuenta." << std::endl;
         return false;
     }
 
-    int i = 0;
-    while (i < entries.size() && entries[i].noCuenta < entry.noCuenta) {
-        i++;
+    int pos = 0;
+    while (pos < entries.size() && entries[pos].noCuenta < entry.noCuenta) {
+        pos++;
     }
 
-    entries.insert(entries.begin() + i, entry);
+    entries.insert(entries.begin() + pos, entry);
     return true;
 }
 
 IndexEntry* Index::find(std::string noCuenta) {
-    int i = binarySearch(noCuenta);
-    if (i == -1) return nullptr;
-    if (!entries[i].activo) return nullptr;
-    return &entries[i];
+    int pos = binarySearch(noCuenta);
+
+    if (pos == -1) return nullptr;
+    if (entries[pos].activo == false) return nullptr;
+
+    return &entries[pos];
 }
 
 bool Index::remove(std::string noCuenta) {
-    int i = binarySearch(noCuenta);
-    if (i == -1) {
-        std::cout << "Registro no encontrado." << std::endl;
+    int pos = binarySearch(noCuenta);
+
+    if (pos == -1) {
+        std::cout << "No se encontro ese numero de cuenta." << std::endl;
         return false;
     }
 
-    entries[i].activo = false;
+    entries[pos].activo = false;
     return true;
 }
 
 bool Index::update(std::string noCuenta, long newOffset, int newSize) {
-    int i = binarySearch(noCuenta);
-    if (i == -1) return false;
+    int pos = binarySearch(noCuenta);
 
-    entries[i].offset = newOffset;
-    entries[i].size = newSize;
+    if (pos == -1) return false;
+
+    entries[pos].offset = newOffset;
+    entries[pos].size   = newSize;
     return true;
 }
 
 void Index::compact() {
-    std::vector<IndexEntry> activos;
+    std::vector<IndexEntry> soloActivos;
 
     for (int i = 0; i < entries.size(); i++) {
-        if (entries[i].activo) {
-            activos.push_back(entries[i]);
+        if (entries[i].activo == true) {
+            soloActivos.push_back(entries[i]);
         }
     }
 
-    entries = activos;
+    entries = soloActivos;
 }
 
 int Index::binarySearch(std::string noCuenta) {
-    int lo = 0;
-    int hi = entries.size() - 1;
+    int izq = 0;
+    int der = entries.size() - 1;
 
-    while (lo <= hi) {
-        int mid = (lo + hi) / 2;
+    while (izq <= der) {
+        int mid = (izq + der) / 2;
 
-        if (entries[mid].noCuenta == noCuenta) return mid;
-        if (entries[mid].noCuenta < noCuenta)  lo = mid + 1;
-        else                                    hi = mid - 1;
+        if (entries[mid].noCuenta == noCuenta) {
+            return mid;
+        }
+
+        if (entries[mid].noCuenta < noCuenta) {
+            izq = mid + 1;
+        } else {
+            der = mid - 1;
+        }
     }
 
     return -1;
