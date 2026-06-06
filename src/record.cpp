@@ -121,9 +121,21 @@ Record readFromJSON(std::string filename) {
     r.noCuenta     = getValorJSON(json, "no_cuenta");
     r.nombre       = getValorJSON(json, "nombre");
     r.telefono     = getValorJSON(json, "telefono");
-    r.edad         = stoi(getValorJSON(json, "edad"));
     r.fechaIngreso = getValorJSON(json, "fecha_ingreso");
     r.activo       = true;
+
+    std::string edadTexto = getValorJSON(json, "edad");
+    if (edadTexto == "") {
+        std::cout << "Error: el campo edad no se encontro en el JSON." << std::endl;
+        return Record();
+    }
+
+    try {
+        r.edad = stoi(edadTexto);
+    } catch (...) {
+        std::cout << "Error: el campo edad tiene un valor invalido: " << edadTexto << std::endl;
+        return Record();
+    }
 
     return r;
 }
