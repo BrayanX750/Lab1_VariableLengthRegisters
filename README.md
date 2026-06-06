@@ -55,33 +55,33 @@ Para limpiar el archivo de datos y quitar los registros eliminados:
 **data/alumno1.json**
 ```json
 {
-    "no_cuenta": "#42351190",
+    "no_cuenta": "2020-10001",
     "nombre": "Carlos Andres Mejia",
     "telefono": "9999-1234",
     "edad": 22,
-    "fecha_ingreso": "2020-01-15"
+    "fecha_ingreso": "20200115"
 }
 ```
 
 **data/alumno2.json**
 ```json
 {
-    "no_cuenta": "#22351789",
+    "no_cuenta": "2021-20045",
     "nombre": "Maria Jose Hernandez Lopez",
     "telefono": "8888-5678",
     "edad": 21,
-    "fecha_ingreso": "2021-03-01"
+    "fecha_ingreso": "20210301"
 }
 ```
 
 **data/alumno3.json**
 ```json
 {
-    "no_cuenta": "#24251087",
+    "no_cuenta": "2022-30099",
     "nombre": "Luis",
     "telefono": "7777-9012",
     "edad": 19,
-    "fecha_ingreso": "2022-08-01"
+    "fecha_ingreso": "20220801"
 }
 ```
 
