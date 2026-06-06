@@ -1,57 +1,52 @@
 # Lab 1 - Registros de Tamaño Variable e Índice Simple
 
-Laboratorio 1 de Estructura de Datos II - UNITEC Q2 2026
+Laboratorio 1 - Estructura de Datos II - UNITEC Q2 2026
 
-## Descripción
+## Como compilar
 
-Esta aplicación gestiona registros de alumnos usando un archivo binario con campos de longitud variable y un índice primario simple que se carga en memoria. Todo se maneja desde la línea de comandos.
-
-## Compilar
+Para compilar el proyecto hay que correr este comando en la terminal desde la carpeta raiz del proyecto:
 
 ```bash
 g++ -std=c++11 src/main.cpp src/record.cpp src/index.cpp src/filemanager.cpp -o alumnos
 ```
 
-## Comandos
+Eso genera el ejecutable `alumnos` que se usa para todos los comandos.
 
-### Agregar un alumno
+## Como usar cada comando
+
+Para agregar un alumno se le pasa un archivo json con los datos:
 ```bash
-./alumnos agregar <archivo.json>
+./alumnos agregar data/alumno1.json
 ```
 
-### Buscar un alumno
+Para buscar un alumno se le pasa el numero de cuenta:
 ```bash
-./alumnos buscar <no_cuenta>
+./alumnos buscar 2020-10001
 ```
 
-### Actualizar un alumno
+Para actualizar los datos de un alumno se le pasa el json con los datos nuevos:
 ```bash
-./alumnos actualizar <archivo.json>
+./alumnos actualizar data/alumno1.json
 ```
 
-### Eliminar un alumno
+Para eliminar un alumno se le pasa el numero de cuenta:
 ```bash
-./alumnos eliminar <no_cuenta>
+./alumnos eliminar 2020-10001
 ```
 
-### Limpiar el archivo de datos
+Para limpiar el archivo de datos y quitar los registros eliminados:
 ```bash
 ./alumnos clean-up
 ```
 
-## Ejemplos de uso
+## Ejemplo completo
 
 ```bash
 ./alumnos agregar data/alumno1.json
 ./alumnos agregar data/alumno2.json
 ./alumnos agregar data/alumno3.json
-
-./alumnos buscar 2020-10001
-
-./alumnos actualizar data/alumno1.json
-
+./alumnos buscar 2021-20045
 ./alumnos eliminar 2022-30099
-
 ./alumnos clean-up
 ```
 
@@ -60,45 +55,45 @@ g++ -std=c++11 src/main.cpp src/record.cpp src/index.cpp src/filemanager.cpp -o 
 **data/alumno1.json**
 ```json
 {
-    "no_cuenta": "2020-10001",
+    "no_cuenta": "#42351190",
     "nombre": "Carlos Andres Mejia",
     "telefono": "9999-1234",
     "edad": 22,
-    "fecha_ingreso": "20200115"
+    "fecha_ingreso": "2020-01-15"
 }
 ```
 
 **data/alumno2.json**
 ```json
 {
-    "no_cuenta": "2021-20045",
+    "no_cuenta": "#22351789",
     "nombre": "Maria Jose Hernandez Lopez",
     "telefono": "8888-5678",
     "edad": 21,
-    "fecha_ingreso": "20210301"
+    "fecha_ingreso": "2021-03-01"
 }
 ```
 
 **data/alumno3.json**
 ```json
 {
-    "no_cuenta": "2022-30099",
+    "no_cuenta": "#24251087",
     "nombre": "Luis",
     "telefono": "7777-9012",
     "edad": 19,
-    "fecha_ingreso": "20220801"
+    "fecha_ingreso": "2022-08-01"
 }
 ```
 
-## Archivos generados
+## Archivos que genera el programa
 
-| Archivo | Descripción |
-|---|---|
-| `alumnos.dat` | Archivo binario donde se guardan los registros |
-| `alumnos.idx` | Archivo de texto donde se guarda el índice |
+Cuando se corre el programa se crean dos archivos automaticamente:
 
-## Estrategia de eliminación
+- `alumnos.dat` — aqui se guardan los registros de los alumnos en binario
+- `alumnos.idx` — aqui se guarda el indice con el numero de cuenta, el offset y el tamano de cada registro
 
-Se usó **Soft Delete (Opción A)**. Cuando se elimina un alumno, el registro no se borra físicamente del archivo `alumnos.dat`, sino que se marca como inactivo en el índice. Esto significa que el registro sigue existiendo en el archivo pero ya no aparece en búsquedas.
+## Como funciona la eliminacion
 
-Para borrar físicamente los registros eliminados se usa el comando `clean-up`, que lee todos los registros activos, reescribe el archivo `alumnos.dat` solo con ellos y reconstruye el índice desde cero con los nuevos offsets.
+Cuando se elimina un alumno con el comando `eliminar`, el registro no se borra del archivo `alumnos.dat` inmediatamente, sino que en el indice se marca como inactivo. Esto se llama soft delete.
+
+El registro eliminado sigue en el archivo pero el programa lo ignora en las busquedas. Para borrarlo fisicamente hay que correr `clean-up`, que reescribe el archivo solo con los alumnos activos y reconstruye el indice desde cero.
