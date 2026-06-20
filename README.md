@@ -19,6 +19,11 @@ Para agregar un alumno se le pasa un archivo json con los datos:
 ./alumnos agregar data/alumno1.json
 ```
 
+También se puede pasar un json con un arreglo de alumnos y los agrega todos de una sola vez:
+```bash
+./alumnos agregar data/alumnos_prueba.json
+```
+
 Para buscar un alumno se le pasa el numero de cuenta:
 ```bash
 ./alumnos buscar 2020-10001
@@ -51,6 +56,13 @@ Para limpiar el archivo de datos y quitar los registros eliminados:
 ```
 
 ## Archivos JSON de prueba
+
+También hay un archivo con 20 alumnos para probar la paginación:
+```bash
+./alumnos agregar data/alumnos_prueba.json
+```
+
+
 
 **data/alumno1.json**
 ```json
@@ -89,8 +101,16 @@ Para limpiar el archivo de datos y quitar los registros eliminados:
 
 Cuando se corre el programa se crean dos archivos automaticamente:
 
-- `alumnos.dat` — aqui se guardan los registros de los alumnos en binario
+- `alumnos.dat` — aqui se guardan los registros de los alumnos en binario con paginas de 512 bytes
 - `alumnos.idx` — aqui se guarda el indice con el numero de cuenta, el offset y el tamano de cada registro
+
+## Como funciona la paginacion y el CRC
+
+El archivo `alumnos.dat` guarda los datos en paginas de 512 bytes. Cada pagina tiene un encabezado de 4 bytes que dice cuantos bytes se han usado, luego 504 bytes de datos y al final 4 bytes con un CRC32 para verificar que los datos no esten corruptos.
+
+Cuando se agrega un alumno el programa busca una pagina con espacio suficiente. Si no encuentra ninguna crea una pagina nueva. Si un registro no cabe en una pagina se pone en la siguiente, los registros nunca se parten entre dos paginas.
+
+Cada vez que se lee una pagina se verifica el CRC para asegurarse de que los datos estan bien.
 
 ## Como funciona la eliminacion
 

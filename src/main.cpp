@@ -1,5 +1,6 @@
 #include <iostream>
 #include <string>
+#include <fstream>
 #include "record.h"
 #include "index.h"
 #include "filemanager.h"
@@ -74,6 +75,48 @@ int main(int argc, char* argv[]) {
     std::string cmd = argv[1];
 
     if (cmd == "agregar" && argc == 3) {
+        std::ifstream verificarJSON(argv[2]);
+        std::string contenido = "";
+        std::string lineaTemp;
+        while (getline(verificarJSON, lineaTemp)) contenido += lineaTemp;
+        verificarJSON.close();
+
+        bool esArray = false;
+        for (int i = 0; i < contenido.size(); i++) {
+            if (contenido[i] == '[') { esArray = true; break; }
+            if (contenido[i] == '{') break;
+        }
+
+        if (esArray) {
+            std::vector<Record> lista = readManyFromJSON(argv[2]);
+            int agregados = 0;
+
+            for (int i = 0; i < lista.size(); i++) {
+                if (!validarRecord(lista[i])) continue;
+
+                if (indice.find(lista[i].noCuenta) != nullptr) {
+                    std::cout << "Ya existe: " << lista[i].noCuenta << std::endl;
+                    continue;
+                }
+
+                long offset = fm.appendRecord(lista[i]);
+                int tamano  = fm.getRecordSize(lista[i]);
+
+                IndexEntry entrada;
+                entrada.noCuenta = lista[i].noCuenta;
+                entrada.offset   = offset;
+                entrada.size     = tamano;
+                entrada.activo   = true;
+
+                indice.insert(entrada);
+                agregados++;
+            }
+
+            std::cout << agregados << " alumnos agregados correctamente." << std::endl;
+            indice.save("alumnos.idx");
+            return 0;
+        }
+
         Record alumno = readFromJSON(argv[2]);
 
         if (alumno.noCuenta == "") {

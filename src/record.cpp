@@ -140,6 +140,64 @@ Record readFromJSON(std::string filename) {
     return r;
 }
 
+std::vector<Record> readManyFromJSON(std::string filename) {
+    std::ifstream file(filename);
+    if (!file.is_open()) {
+        std::cout << "No se pudo abrir el archivo: " << filename << std::endl;
+        return std::vector<Record>();
+    }
+
+    std::string json = "";
+    std::string linea;
+    while (getline(file, linea)) {
+        json += linea;
+    }
+    file.close();
+
+    std::vector<Record> alumnos;
+
+    int i = 0;
+    while (i < json.size()) {
+        int inicio = json.find('{', i);
+        if (inicio == -1) break;
+
+        int fin = json.find('}', inicio);
+        if (fin == -1) break;
+
+        std::string bloque = json.substr(inicio, fin - inicio + 1);
+
+        Record r;
+        r.noCuenta     = getValorJSON(bloque, "no_cuenta");
+        r.nombre       = getValorJSON(bloque, "nombre");
+        r.telefono     = getValorJSON(bloque, "telefono");
+        r.fechaIngreso = getValorJSON(bloque, "fecha_ingreso");
+        r.activo       = true;
+
+        std::string edadTexto = getValorJSON(bloque, "edad");
+        if (edadTexto == "") {
+            std::cout << "Error: falta el campo edad en uno de los alumnos." << std::endl;
+            i = fin + 1;
+            continue;
+        }
+
+        try {
+            r.edad = stoi(edadTexto);
+        } catch (...) {
+            std::cout << "Error: edad invalida en uno de los alumnos." << std::endl;
+            i = fin + 1;
+            continue;
+        }
+
+        if (r.noCuenta != "") {
+            alumnos.push_back(r);
+        }
+
+        i = fin + 1;
+    }
+
+    return alumnos;
+}
+
 void printRecord(Record r) {
     std::cout << "No. Cuenta    : " << r.noCuenta << std::endl;
     std::cout << "Nombre        : " << r.nombre << std::endl;

@@ -1,0 +1,22 @@
+[
+    { "no_cuenta": "2020-10001", "nombre": "Carlos Andres Mejia", "telefono": "9999-1234", "edad": 22, "fecha_ingreso": "20200115" },
+    { "no_cuenta": "2020-10002", "nombre": "Maria Jose Lopez", "telefono": "8888-5678", "edad": 21, "fecha_ingreso": "20200210" },
+    { "no_cuenta": "2020-10003", "nombre": "Luis Fernando Paz", "telefono": "7777-9012", "edad": 23, "fecha_ingreso": "20200301" },
+    { "no_cuenta": "2020-10004", "nombre": "Ana Sofia Reyes", "telefono": "6666-3456", "edad": 20, "fecha_ingreso": "20200415" },
+    { "no_cuenta": "2020-10005", "nombre": "Diego Alejandro Castro", "telefono": "5555-7890", "edad": 24, "fecha_ingreso": "20200520" },
+    { "no_cuenta": "2021-20001", "nombre": "Valeria Hernandez", "telefono": "4444-1234", "edad": 19, "fecha_ingreso": "20210110" },
+    { "no_cuenta": "2021-20002", "nombre": "Jose Miguel Torres", "telefono": "3333-5678", "edad": 22, "fecha_ingreso": "20210205" },
+    { "no_cuenta": "2021-20003", "nombre": "Karen Paola Mendez", "telefono": "2222-9012", "edad": 21, "fecha_ingreso": "20210318" },
+    { "no_cuenta": "2021-20004", "nombre": "Roberto Carlos Diaz", "telefono": "1111-3456", "edad": 25, "fecha_ingreso": "20210422" },
+    { "no_cuenta": "2021-20005", "nombre": "Andrea Gabriela Flores", "telefono": "9898-7890", "edad": 20, "fecha_ingreso": "20210530" },
+    { "no_cuenta": "2022-30001", "nombre": "Kevin Steven Morales", "telefono": "8787-1234", "edad": 19, "fecha_ingreso": "20220115" },
+    { "no_cuenta": "2022-30002", "nombre": "Daniela Alejandra Ruiz", "telefono": "7676-5678", "edad": 22, "fecha_ingreso": "20220210" },
+    { "no_cuenta": "2022-30003", "nombre": "Fernando Jose Aguilar", "telefono": "6565-9012", "edad": 23, "fecha_ingreso": "20220305" },
+    { "no_cuenta": "2022-30004", "nombre": "Lucia Maria Campos", "telefono": "5454-3456", "edad": 20, "fecha_ingreso": "20220418" },
+    { "no_cuenta": "2022-30005", "nombre": "Marco Antonio Vega", "telefono": "4343-7890", "edad": 24, "fecha_ingreso": "20220522" },
+    { "no_cuenta": "2023-40001", "nombre": "Gabriela Beatriz Sosa", "telefono": "3232-1234", "edad": 18, "fecha_ingreso": "20230112" },
+    { "no_cuenta": "2023-40002", "nombre": "Pablo Enrique Molina", "telefono": "2121-5678", "edad": 21, "fecha_ingreso": "20230208" },
+    { "no_cuenta": "2023-40003", "nombre": "Stephanie Nicole Pena", "telefono": "1010-9012", "edad": 19, "fecha_ingreso": "20230314" },
+    { "no_cuenta": "2023-40004", "nombre": "Hector Manuel Rios", "telefono": "9090-3456", "edad": 22, "fecha_ingreso": "20230420" },
+    { "no_cuenta": "2023-40005", "nombre": "Isabella Fernanda Cruz", "telefono": "8080-7890", "edad": 20, "fecha_ingreso": "20230525" }
+]
