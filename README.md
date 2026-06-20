@@ -7,7 +7,7 @@ Laboratorio 1 - Estructura de Datos II - UNITEC Q2 2026
 Para compilar el proyecto hay que correr este comando en la terminal desde la carpeta raiz del proyecto:
 
 ```bash
-g++ -std=c++11 src/main.cpp src/record.cpp src/index.cpp src/filemanager.cpp -o alumnos
+g++ -std=c++11 src/main.cpp src/record.cpp src/index.cpp src/filemanager.cpp src/page.cpp -o alumnos
 ```
 
 Eso genera el ejecutable `alumnos` que se usa para todos los comandos.

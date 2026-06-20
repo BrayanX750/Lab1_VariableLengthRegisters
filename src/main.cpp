@@ -108,11 +108,14 @@ int main(int argc, char* argv[]) {
             return 1;
         }
 
-        if (indice.find(cuenta) == nullptr) {
+        IndexEntry* entrada = indice.find(cuenta);
+
+        if (entrada == nullptr) {
             std::cout << "Error: no se encontro ningun alumno con el numero de cuenta " << cuenta << std::endl;
             return 1;
         }
 
+        fm.marcarInactivo(entrada->offset, entrada->size);
         indice.remove(cuenta);
         std::cout << "Alumno eliminado correctamente." << std::endl;
 
