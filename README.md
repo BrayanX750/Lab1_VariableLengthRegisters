@@ -117,3 +117,23 @@ Cada vez que se lee una pagina se verifica el CRC para asegurarse de que los dat
 Cuando se elimina un alumno con el comando `eliminar`, el registro no se borra del archivo `alumnos.dat` inmediatamente, sino que en el indice se marca como inactivo. Esto se llama soft delete.
 
 El registro eliminado sigue en el archivo pero el programa lo ignora en las busquedas. Para borrarlo fisicamente hay que correr `clean-up`, que reescribe el archivo solo con los alumnos activos y reconstruye el indice desde cero.
+
+POR ULTIMO Y NO MENOS IMPORTANTE:
+
+## Como verificar la paginacion y el CRC
+
+Para ver que los datos se estan guardando en paginas de 512 bytes con su CRC se puede usar este comando:
+
+```bash
+hexdump -C alumnos.dat
+```
+
+Cada bloque de 512 bytes es una pagina. Los ultimos 4 bytes de cada pagina son el CRC32 de esa pagina. Por ejemplo si el archivo pesa 1536 bytes significa que hay 3 paginas y cada una tiene su propio CRC al final.
+
+Para ver cuantas paginas se crearon:
+
+```bash
+ls -la alumnos.dat
+```
+
+Si el archivo pesa 512 bytes es 1 pagina, 1024 bytes son 2 paginas, 1536 bytes son 3 paginas, y asi sucesivamente.
